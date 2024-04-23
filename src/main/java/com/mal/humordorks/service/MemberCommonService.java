@@ -11,6 +11,8 @@ public interface MemberCommonService {
 
     Member findMember(long id);
 
+    Member findMember(String email);
+    
     Page<Member> findMembersByNickname(String nickname, int page, int size);
 
     Page<Member> findAllMember(int page, int size);

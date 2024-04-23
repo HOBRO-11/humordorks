@@ -36,6 +36,11 @@ public class MemberCommonServiceImpl implements MemberCommonService {
     }
 
     @Override
+    public Member findMember(String email){
+        return memberRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("this member not found"));
+    }
+
+    @Override
     public Page<Member> findMembersByNickname(String nickname, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Direction.DESC, "lastModifiedDate");
         return memberRepository.findByNicknameContaining(nickname, pageable);
