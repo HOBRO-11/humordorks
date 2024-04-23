@@ -18,6 +18,8 @@ public interface PostsCommonService {
 
     Page<Posts> findPopularMonthlyPosts();
 
+    Page<Posts> findPopularYearlyPosts();
+
     void modifiedPosts(Member member, Posts posts, String content);
 
     // TODO elastic search 를 써서 찾는 인덱스를 만든다.

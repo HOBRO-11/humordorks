@@ -3,6 +3,7 @@ package com.mal.humordorks.service.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 
 import com.mal.humordorks.exception.ResourceNotFound;
 import com.mal.humordorks.exception.UnAuthMemberException;
@@ -34,7 +35,7 @@ public class CommentCommonServiceImpl implements CommentCommonService {
 
     @Override
     public Page<Comment> findCommentsByPosts(Posts posts, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Direction.ASC, "createdDate");
         return commentRepository.findAllByPosts(posts, pageable);
     }
 

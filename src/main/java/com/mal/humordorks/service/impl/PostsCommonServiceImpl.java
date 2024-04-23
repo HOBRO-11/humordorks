@@ -2,7 +2,6 @@ package com.mal.humordorks.service.impl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.YearMonth;
 
 import org.springframework.data.domain.Page;
@@ -61,6 +60,15 @@ public class PostsCommonServiceImpl implements PostsCommonService {
         LocalDateTime lastDayOfMonth = getLastDayOfMonth();
 
         return postsRepository.findPopularPosts(firstDayOfMonth, lastDayOfMonth, pageable);
+    }
+
+    @Override
+    public Page<Posts> findPopularYearlyPosts() {
+        Pageable pageable = PageRequest.of(0, 100, Direction.DESC, "likes");
+        LocalDateTime firstDayOfYear = getFirstDayOfYear();
+        LocalDateTime lastDayOfYear = getLastDayOfYear();
+
+        return postsRepository.findPopularPosts(firstDayOfYear, lastDayOfYear, pageable);
     }
 
     // TODO elastic search 를 써서 찾는 인덱스를 만든다.
@@ -127,6 +135,18 @@ public class PostsCommonServiceImpl implements PostsCommonService {
         YearMonth yearMonth = YearMonth.of(year, month);
         int lengthOfMonth = yearMonth.lengthOfMonth();
         return LocalDateTime.of(year, month, lengthOfMonth, 23, 59);
+    }
+
+    private LocalDateTime getFirstDayOfYear() {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        return LocalDateTime.of(year, 1, 1, 0, 0);
+    }
+
+    private LocalDateTime getLastDayOfYear() {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        return LocalDateTime.of(year, 12, 31, 23, 59);
     }
 
 }
