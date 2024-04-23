@@ -1,14 +1,14 @@
 package com.mal.humordorks.dto;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class PagedResponse<T> {
-    private List<T> content;
+	private List<T> content;
 	private int page;
 	private int size;
 	private long totalElements;
@@ -39,8 +39,6 @@ public class PagedResponse<T> {
 			this.content = Collections.unmodifiableList(content);
 		}
 	}
-
-
 
 	public boolean isLast() {
 		return last;
