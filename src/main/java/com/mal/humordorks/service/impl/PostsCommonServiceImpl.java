@@ -1,5 +1,10 @@
 package com.mal.humordorks.service.impl;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +46,23 @@ public class PostsCommonServiceImpl implements PostsCommonService {
         return postsRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<Posts> findPopularWeeklyPosts() {
+        Pageable pageable = PageRequest.of(0, 100, Direction.DESC, "likes");
+        LocalDateTime mondayOfWeek = getMondayOfTheWeek();
+        LocalDateTime sundayOfWeek = mondayOfWeek.plusDays(6L);
+        return postsRepository.findPopularPosts(mondayOfWeek, sundayOfWeek, pageable);
+    }
+
+    @Override
+    public Page<Posts> findPopularMonthlyPosts() {
+        Pageable pageable = PageRequest.of(0, 100, Direction.DESC, "likes");
+        LocalDateTime firstDayOfMonth = getFirstDayOfMonth();
+        LocalDateTime lastDayOfMonth = getLastDayOfMonth();
+
+        return postsRepository.findPopularPosts(firstDayOfMonth, lastDayOfMonth, pageable);
+    }
+
     // TODO elastic search 를 써서 찾는 인덱스를 만든다.
 
     @Override
@@ -51,7 +73,7 @@ public class PostsCommonServiceImpl implements PostsCommonService {
 
     // TODO only just admin can hide posts
     @Override
-    public void hidePost(Posts posts){
+    public void hidePost(Posts posts) {
         posts.hidePost();
     }
 
@@ -77,6 +99,34 @@ public class PostsCommonServiceImpl implements PostsCommonService {
         if (posts.getMember() != member) {
             throw new UnAuthMemberException("this member not author");
         }
+    }
+
+    private LocalDateTime getMondayOfTheWeek() {
+        LocalDateTime now = LocalDateTime.now();
+        DayOfWeek dayOfWeek = now.getDayOfWeek();
+        LocalDateTime mondayOfWeek = null;
+        while (dayOfWeek != DayOfWeek.MONDAY) {
+            mondayOfWeek = now.minusDays(1L);
+        }
+        return mondayOfWeek;
+    }
+
+    private LocalDateTime getFirstDayOfMonth() {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        YearMonth yearMonth = YearMonth.of(year, month);
+        int lengthOfMonth = yearMonth.lengthOfMonth();
+        return LocalDateTime.of(year, month, lengthOfMonth, 0, 0);
+    }
+
+    private LocalDateTime getLastDayOfMonth() {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        YearMonth yearMonth = YearMonth.of(year, month);
+        int lengthOfMonth = yearMonth.lengthOfMonth();
+        return LocalDateTime.of(year, month, lengthOfMonth, 23, 59);
     }
 
 }

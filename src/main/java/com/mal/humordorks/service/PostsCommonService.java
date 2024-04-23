@@ -14,6 +14,10 @@ public interface PostsCommonService {
 
     Page<Posts> findAllPosts(int page, int size);
 
+    Page<Posts> findPopularWeeklyPosts();
+
+    Page<Posts> findPopularMonthlyPosts();
+
     void modifiedPosts(Member member, Posts posts, String content);
 
     // TODO elastic search 를 써서 찾는 인덱스를 만든다.
