@@ -42,6 +42,9 @@ public final class Posts extends BaseTimeEntity {
     @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "likes")
+    private int likes;
+
     @OneToMany(mappedBy = "posts")
     private List<Comment> comments = new Vector<>();
 
@@ -72,8 +75,19 @@ public final class Posts extends BaseTimeEntity {
         this.comments.add(comment);
     }
 
-    public void addLike(LikePosts likePosts) {
+    private void addLike() {
+        this.likes += 1;
+    }
+
+    public void minusLikes() {
+        if (this.likes < 1)
+            return;
+        this.likes -= 1;
+    }
+
+    public void addLikePosts(LikePosts likePosts) {
         this.likePosts.add(likePosts);
+        addLike();
     }
 
     public void hidePost() {

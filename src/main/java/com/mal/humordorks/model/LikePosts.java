@@ -34,7 +34,7 @@ public final class LikePosts {
     public static LikePosts createLike(Posts posts, Member member) {
         LikePosts likePosts = new LikePosts();
         likePosts.posts = posts;
-        likePosts.posts.addLike(likePosts);
+        likePosts.posts.addLikePosts(likePosts);
         likePosts.member = member;
         likePosts.member.addLike(likePosts);
         return likePosts;
