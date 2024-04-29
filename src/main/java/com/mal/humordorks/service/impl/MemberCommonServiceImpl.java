@@ -1,5 +1,9 @@
 package com.mal.humordorks.service.impl;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -7,7 +11,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mal.humordorks.dto.MemberSignUpForm;
+import com.mal.humordorks.exception.ResourceExistException;
 import com.mal.humordorks.exception.ResourceNotFound;
+import com.mal.humordorks.exception.UnAuthMemberException;
 import com.mal.humordorks.model.Member;
 import com.mal.humordorks.model.MemberStatus;
 import com.mal.humordorks.repository.MemberRepository;
@@ -20,6 +26,13 @@ public class MemberCommonServiceImpl implements MemberCommonService {
 
     public MemberCommonServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
+    }
+
+    @Override
+    public void checkPassword(Member member, String password) {
+        if (member.getPassword() != password) {
+            throw new UnAuthMemberException("wrong password");
+        }
     }
 
     @Override
@@ -36,7 +49,7 @@ public class MemberCommonServiceImpl implements MemberCommonService {
     }
 
     @Override
-    public Member findMember(String email){
+    public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("this member not found"));
     }
 
@@ -59,6 +72,9 @@ public class MemberCommonServiceImpl implements MemberCommonService {
 
     @Override
     public void modifyPassword(Member member, String password) {
+        if (member.getPassword() == password) {
+            throw new ResourceExistException("Previously used passwords cannot be used.");
+        }
         member.modifyPassword(password);
     }
 
@@ -94,6 +110,15 @@ public class MemberCommonServiceImpl implements MemberCommonService {
     @Override
     public boolean isUseableNickname(String nickname) {
         return memberRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void checkCanModify(Member member) throws BadRequestException {
+        LocalDateTime lastModifiedDate = member.getLastModifiedDate();
+        long days = Duration.between(lastModifiedDate, LocalDateTime.now()).toDays();
+        if (days < 90) {
+            throw new BadRequestException("you can change nickname after 90 days from last Modified Date");
+        }
     }
 
 }

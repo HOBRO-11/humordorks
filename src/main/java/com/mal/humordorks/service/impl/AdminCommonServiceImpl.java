@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.mal.humordorks.dto.AdminSignUpForm;
+import com.mal.humordorks.exception.ResourceExistException;
 import com.mal.humordorks.exception.ResourceNotFound;
 import com.mal.humordorks.exception.UnAuthAdminException;
 import com.mal.humordorks.model.Admin;
@@ -13,7 +14,12 @@ import com.mal.humordorks.repository.AdminRepository;
 import com.mal.humordorks.service.AdminCommonService;
 
 public class AdminCommonServiceImpl implements AdminCommonService {
-    
+
+    @Override
+    public Admin findByEmail(String email) {
+        return adminRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("this admin not found"));
+    }
+
     private final AdminRepository adminRepository;
 
     public AdminCommonServiceImpl(AdminRepository adminRepository) {
@@ -21,7 +27,7 @@ public class AdminCommonServiceImpl implements AdminCommonService {
     }
 
     @Override
-    public Admin createAdmin(AdminSignUpForm adminSignUpForm){
+    public Admin createAdmin(AdminSignUpForm adminSignUpForm) {
         String nickname = adminSignUpForm.getNickname();
         String email = adminSignUpForm.getEmail();
         String password = adminSignUpForm.getPassword();
@@ -29,42 +35,50 @@ public class AdminCommonServiceImpl implements AdminCommonService {
     }
 
     @Override
-    public Admin findAdmin(long id){
+    public Admin findAdmin(long id) {
         return adminRepository.findById(id).orElseThrow(() -> new ResourceNotFound("this admin not found"));
     }
 
     @Override
-    public Page<Admin> findAllAdmin(int page, int size){
+    public Page<Admin> findAllAdmin(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return adminRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Admin> findAllByRole(AdminRole role, int page, int size){
+    public Page<Admin> findAllByRole(AdminRole role, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return adminRepository.findAllByAdminRole(role,pageable);
+        return adminRepository.findAllByAdminRole(role, pageable);
     }
 
     @Override
-    public void assignRoleForStaff(Admin manager, Admin admin){
+    public void modifyPassword(Admin admin, String password) {
+        if (admin.getPassword() == password) {
+            throw new ResourceExistException("Previously used passwords cannot be used.");
+        }
+        admin.modifyPassword(password);
+    }
+
+    @Override
+    public void assignRoleForStaff(Admin manager, Admin admin) {
         checkAuthor(manager);
         admin.assignRoleForStaff();
     }
 
     @Override
-    public void assignRoleForManager(Admin manager, Admin admin){
+    public void assignRoleForManager(Admin manager, Admin admin) {
         checkAuthor(manager);
         admin.assignRoleForManager();
     }
 
     @Override
-    public void terminateRole(Admin manager, Admin admin){
+    public void terminateRole(Admin manager, Admin admin) {
         checkAuthor(manager);
         admin.terminateRole();
     }
 
     @Override
-    public void deleteAdmin(Admin admin){
+    public void deleteAdmin(Admin admin) {
         adminRepository.delete(admin);
     }
 

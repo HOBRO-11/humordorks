@@ -86,14 +86,7 @@ public class PostsCommonServiceImpl implements PostsCommonService {
     }
 
     @Override
-    public void hidePost(Member member, Posts posts) {
-        checkAuthor(member, posts);
-        posts.hidePost();
-    }
-
-    @Override
-    public void publicPost(Member member, Posts posts) {
-        checkAuthor(member, posts);
+    public void publicPost(Posts posts) {
         posts.publicPost();
     }
 
@@ -148,5 +141,7 @@ public class PostsCommonServiceImpl implements PostsCommonService {
         int year = now.getYear();
         return LocalDateTime.of(year, 12, 31, 23, 59);
     }
+
+
 
 }
