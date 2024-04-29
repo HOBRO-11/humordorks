@@ -4,6 +4,7 @@ import com.mal.humordorks.model.common.BaseTimeEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,9 +35,14 @@ public final class Comment extends BaseTimeEntity {
     @Column(name = "CONTENT")
     private String content;
 
-    private Comment(){}
+    @Column(name = "status")
+    @Enumerated
+    private CommentStatus status = CommentStatus.PUBLIC;
 
-    public static Comment createLike(Member member, Posts posts, String content) {
+    private Comment() {
+    }
+
+    public static Comment createComment(Member member, Posts posts, String content) {
         Comment comment = new Comment();
         comment.member = member;
         comment.member.addComments(comment);
@@ -46,7 +52,15 @@ public final class Comment extends BaseTimeEntity {
         return comment;
     }
 
-    public void modifyContent(String content){
+    public void modifyContent(String content) {
         this.content = content;
+    }
+
+    public void hideComment() {
+        this.status = CommentStatus.HIDE;
+    }
+
+    public void publicComment() {
+        this.status = CommentStatus.PUBLIC;
     }
 }

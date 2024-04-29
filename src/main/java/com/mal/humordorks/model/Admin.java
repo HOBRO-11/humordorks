@@ -51,6 +51,10 @@ public final class Admin extends BaseTimeEntity {
         return admin;
     }
 
+    public void modifyPassword(String password){
+        this.password = password;
+    }
+
     public void assignRoleForStaff(){
         this.role = AdminRole.STAFF;
     }
