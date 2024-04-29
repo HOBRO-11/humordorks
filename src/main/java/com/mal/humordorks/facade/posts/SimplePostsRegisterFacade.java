@@ -1,4 +1,4 @@
-package com.mal.humordorks.facade;
+package com.mal.humordorks.facade.posts;
 
 import com.mal.humordorks.dto.PostsPrintForm;
 import com.mal.humordorks.dto.PostsRegisterForm;
@@ -17,7 +17,7 @@ public class SimplePostsRegisterFacade {
     }
 
     // TODO 기존 이미지들과 비교, 이미지 가공 저장, content안의 텍스트 elastic search에 넣기, 저장된 이미지 추천 목록에 올리기
-    public PostsPrintForm registerPostsFromExist(long memberId, PostsRegisterForm postsRegisterForm){
+    public PostsPrintForm registerPosts(long memberId, PostsRegisterForm postsRegisterForm){
         Member member = memberCommonService.findMember(memberId);
         postsCommonService.createPosts(member, postsRegisterForm);
         String nickname = member.getNickname();
