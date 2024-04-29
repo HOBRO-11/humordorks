@@ -1,8 +1,7 @@
-package com.mal.humordorks.facade;
+package com.mal.humordorks.facade.member;
 
 import com.mal.humordorks.dto.MemberPrintForm;
 import com.mal.humordorks.dto.MemberSignInForm;
-import com.mal.humordorks.exception.UnAuthMemberException;
 import com.mal.humordorks.model.Member;
 import com.mal.humordorks.service.MemberCommonService;
 
@@ -18,9 +17,7 @@ public class MemberSignInFacade {
         String email = memberSignInForm.getEmail();
         String password = memberSignInForm.getPassword();
         Member member = memberCommonService.findMember(email);
-        if (member.getPassword() != password) {
-            throw new UnAuthMemberException("wrong password");
-        }
+        memberCommonService.checkPassword(member, password);
         return MemberPrintForm.toDto(member);
     }
 

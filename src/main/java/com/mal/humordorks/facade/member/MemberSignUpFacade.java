@@ -1,4 +1,4 @@
-package com.mal.humordorks.facade;
+package com.mal.humordorks.facade.member;
 
 import com.mal.humordorks.dto.MemberPrintForm;
 import com.mal.humordorks.dto.MemberSignUpForm;
