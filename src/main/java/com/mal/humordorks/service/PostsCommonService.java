@@ -27,9 +27,7 @@ public interface PostsCommonService {
     // TODO only just admin can hide posts
     void hidePost(Posts posts);
 
-    void hidePost(Member member, Posts posts);
-
-    void publicPost(Member member, Posts posts);
+    void publicPost(Posts posts);
 
     void deletePosts(Member member, Posts posts);
 

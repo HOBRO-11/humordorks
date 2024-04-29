@@ -1,5 +1,6 @@
 package com.mal.humordorks.service;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 
 import com.mal.humordorks.dto.MemberSignUpForm;
@@ -32,5 +33,9 @@ public interface MemberCommonService {
     boolean isUseableEmail(String email);
 
     boolean isUseableNickname(String nickname);
+
+    void checkCanModify(Member member) throws BadRequestException;
+
+    void checkPassword(Member member, String password);
 
 }

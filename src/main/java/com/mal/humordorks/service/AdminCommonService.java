@@ -16,6 +16,8 @@ public interface AdminCommonService {
 
     Page<Admin> findAllByRole(AdminRole role, int page, int size);
 
+    public void modifyPassword(Admin admin, String password);
+
     void assignRoleForStaff(Admin manager, Admin admin);
 
     void assignRoleForManager(Admin manager, Admin admin);
@@ -23,5 +25,7 @@ public interface AdminCommonService {
     void terminateRole(Admin manager, Admin admin);
 
     void deleteAdmin(Admin admin);
+
+    Admin findByEmail(String email);
 
 }

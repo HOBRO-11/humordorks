@@ -20,4 +20,8 @@ public interface CommentCommonService {
 
     void deleteComment(Member member, Comment comment);
 
+    void hideComment(Comment comment);
+
+    void publicComment(Comment comment);
+
 }
