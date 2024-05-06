@@ -70,7 +70,7 @@ public class Trie {
             }
         }
     }
-    
+
     private String catchText(Node root) {
         String result = "";
         result += root.getC();
