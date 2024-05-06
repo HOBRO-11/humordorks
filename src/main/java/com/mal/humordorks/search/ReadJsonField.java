@@ -17,7 +17,11 @@ public class ReadJsonField {
         this.objectMapper = objectMapper;
     }
 
-    public void setJsonNode() throws IOException {
+    public void setJsonNode(File file) throws IOException {
+        jsonNode = objectMapper.readTree(file);
+    }
+
+    public void setJsonNode(String json) throws IOException {
         jsonNode = objectMapper.readTree(new File("/Users/hobro/vscode_workspace/init_data/es_terms.json"));
     }
 
