@@ -35,7 +35,7 @@ public class Trie {
         Node findNode = findNodeByText(term, root);
 
         // text is textable
-        if (findNode.isTextable) {
+        if (findNode.isTextable()) {
             result.add(text);
         }
 
@@ -75,7 +75,7 @@ public class Trie {
         String result = "";
         result += root.getC();
 
-        if (root.isTextable) {
+        if (root.isTextable()) {
             return result;
         }
         List<Node> tempChildren = root.getChildren();
@@ -240,10 +240,6 @@ public class Trie {
 
         public void addChild(Node ntt) {
             this.children.add(ntt);
-        }
-
-        public void removeChild(Node ntt) {
-            this.children.remove(ntt);
         }
     }
 }

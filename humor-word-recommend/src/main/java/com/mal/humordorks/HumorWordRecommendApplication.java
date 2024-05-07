@@ -4,11 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-// @EnableJpaAuditing
-public class HumordorksApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(HumordorksApplication.class, args);
-	}
-
+public class HumorWordRecommendApplication {
+    
+    public static void main(String[] args) {
+        SpringApplication.run(HumorWordRecommendApplication.class, args);
+    }
 }

@@ -1,1 +1,3 @@
 rootProject.name = 'humordorks'
+include 'humor-main'
+include 'humor-word-recommend'

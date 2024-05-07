@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mal.humordorks.exception.ResourceNotFound;
 
 @Component
 public class TotalTermRepositoryImpl implements TotalTermRepository {
@@ -64,7 +63,7 @@ public class TotalTermRepositoryImpl implements TotalTermRepository {
 
     private void checkIndexName(String idxName) {
         if (LIST_IDX.contains(new Index(idxName)) == Boolean.FALSE) {
-            throw new ResourceNotFound(" this index not register");
+            throw new RuntimeException(" this index not register");
         }
     }
 
