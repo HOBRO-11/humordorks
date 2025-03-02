@@ -5,26 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Buttons</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <style>
         .dynamic-button {
-            border: 2px solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(to right, blue, green);
-            border-radius: 20px;
+            /* 배경 스타일 */
+            background: linear-gradient(to right, #405d9b, #3be492);
+            /* 그라데이션 효과 */
+            border: none;
+            /* 기본 테두리 제거 */
+            border-radius: 50px;
+            /* 둥근 효과 */
             padding: 10px 30px;
+            /* 버튼 내부 여백 */
+
+            /* 텍스트 스타일링 */
             font-size: 16px;
+            font-family: 'Jua', sans-serif;
+            /* Google Fonts에서 사용할 폰트 */
+            text-align: center;
+            /* 텍스트 정렬 */
+            color: white;
+            /* 텍스트 색상 */
             cursor: pointer;
+            /* 마우스 커서 */
             transition: all 0.3s ease;
-            background: white;
-            color: black;
-            font-family: 'Black Han Sans', sans-serif;
+            /* hover 시 애니메이션 */
+
+            /* 그림자 효과 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .dynamic-button:hover {
-            background-color: rgba(0, 128, 255, 0.1);
+            /* hover 시 배경색 변경 */
+            background: linear-gradient(to right, #0077FF, #53b680);
+            /* hover 시 다른 그라데이션 */
             transform: scale(1.05);
+            /* 살짝 커짐 */
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
+            /* hover 시 그림자 변경 */
+        }
+
+        /* 버튼 간 간격 추가 */
+        .buttons-container {
+            margin-bottom: 20px;
+            /* 각 버튼 컨테이너 간격 */
+        }
+
+        /* 추가 공간 조정 */
+        .buttons-container {
+            margin-bottom: 20px;
+            /* 각 버튼 컨테이너 간격 추가 */
         }
 
         .video-container {
@@ -37,12 +68,16 @@
             height: 300px;
             border-radius: 10px;
         }
+
+        .head {
+            font-family: 'Jua', sans-serif;
+        }
     </style>
 </head>
 
 <body>
-    <h1>굿드라이버 실내운전면허연습장</h1>
-    <div id="buttons-container"></div> <!-- JavaScript에서 버튼 생성 -->
+    <h1 class="head">굿드라이버 실내운전면허연습장</h1>
+    <div id="buttons-container"></div>
 
     <script src="dynamic_button.js"></script>
 
