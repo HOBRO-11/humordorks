@@ -8,12 +8,12 @@ function createButtons(videoData) {
     videoData.forEach(video => {
         // 버튼 컨테이너 생성
         const buttonContainer = document.createElement('div');
-        buttonContainer.className = "button-container";
+        buttonContainer.className = "buttons-container"; // 중간 컨테이너 스타일 클래스
 
         // 버튼 생성
         const button = document.createElement('button');
-        button.className = "dynamic-button";
-        button.textContent = video.title;
+        button.className = "dynamic-button"; // 버튼에 클래스 추가
+        button.textContent = video.title; // 버튼 내용 설정
 
         // 클릭 이벤트 추가
         button.addEventListener('click', function () {
@@ -22,11 +22,11 @@ function createButtons(videoData) {
 
         // 영상 컨테이너 생성
         const videoContainer = document.createElement('div');
-        videoContainer.className = "video-container";
+        videoContainer.className = "video-container"; // 동영상 컨테이너 클래스
 
         // iframe 생성
         const videoIframe = document.createElement('iframe');
-        videoIframe.src = ""; // 초기에는 빈 src
+        videoIframe.src = ""; // 초기에 빈 src
         videoIframe.frameBorder = "0";
         videoIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         videoIframe.allowFullscreen = true;
