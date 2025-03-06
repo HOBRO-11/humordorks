@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <img id="sample_img" src="./tesseract_sample.png">
+  <button onclick="handleClick()">버튼</button>
+
+  <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+  <script>
+    const handleClick = () => {
+      Tesseract.recognize(
+        document.querySelector('#sample_img'),
+        'eng+kor', // 영어일 경우 eng, 둘 다: eng+kor
+        { logger: m => { console.log(m) } }  // 인식 진행 상태 관련 로그
+      )
+      .then(({ data: { text } }) => { 
+        console.log(text);  // 이미지에서 추출된 텍스트
+      })
+      .catch (err => { console.error(err); })
+      }
+  </script>
+</body>
+</html>
