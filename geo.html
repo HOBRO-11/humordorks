@@ -18,9 +18,13 @@
                 // 위치 정보 가져오기
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        const { latitude, longitude } = position.coords;
-                        latitude = (Int8Array) (latitude * 100 - 3300) / 2;
-                        longitude = (Int8Array) (longitude * 100 - 12450) / 2;
+                        let { latitude, longitude } = position.coords;
+
+                        // 좌표 계산 조작
+                        latitude = ((latitude * 100 - 3300) / 2) | 0; // 비트 연산자로 소수점 제거
+                        longitude = ((longitude * 100 - 12450) / 2) | 0;
+
+                        // 정보 출력
                         output.textContent = `위도: ${latitude}, 경도: ${longitude}`;
                     },
                     (error) => {
