@@ -19,6 +19,8 @@
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const { latitude, longitude } = position.coords;
+                        latitude = (Int8Array) (latitude * 100 - 3300) / 2;
+                        longitude = (Int8Array) (longitude * 100 - 12450) / 2;
                         output.textContent = `위도: ${latitude}, 경도: ${longitude}`;
                     },
                     (error) => {
