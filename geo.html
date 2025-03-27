@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 위치 정보</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        #status {
+            color: #555;
+        }
+        #locationData {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>사용자 위치 정보 확인</h1>
+    <button id="getLocationButton">현재 위치 가져오기</button>
+    <div id="status"></div>
+    <div id="locationData" style="display: none;">
+        <p><strong>위도(Latitude):</strong> <span id="latitude"></span></p>
+        <p><strong>경도(Longitude):</strong> <span id="longitude"></span></p>
+        <p><strong>정확도(Accuracy):</strong> <span id="accuracy"></span> 미터</p>
+    </div>
+
+    <script>
+        document.getElementById('getLocationButton').addEventListener('click', () => {
+            const statusDiv = document.getElementById('status');
+            const locationDiv = document.getElementById('locationData');
+            const latitudeEl = document.getElementById('latitude');
+            const longitudeEl = document.getElementById('longitude');
+            const accuracyEl = document.getElementById('accuracy');
+
+            // 상태 초기화
+            statusDiv.innerText = "위치를 가져오는 중...";
+            locationDiv.style.display = "none";
+
+            // Geolocation API를 사용해 위치 확인
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        // 위치 데이터를 위치 요소에 표시
+                        const { latitude, longitude, accuracy } = position.coords;
+
+                        statusDiv.innerText = "위치를 성공적으로 가져왔습니다!";
+                        latitudeEl.textContent = latitude.toFixed(6);
+                        longitudeEl.textContent = longitude.toFixed(6);
+                        accuracyEl.textContent = accuracy;
+
+                        // 위치 데이터 표시
+                        locationDiv.style.display = "block";
+                    },
+                    (error) => {
+                        // 오류 처리
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                statusDiv.innerText = "위치 권한이 거부되었습니다.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                statusDiv.innerText = "위치 정보를 사용할 수 없습니다.";
+                                break;
+                            case error.TIMEOUT:
+                                statusDiv.innerText = "위치 요청 시간이 초과되었습니다.";
+                                break;
+                            default:
+                                statusDiv.innerText = "알 수 없는 오류가 발생했습니다.";
+                                break;
+                        }
+                    }
+                );
+            } else {
+                // 브라우저가 Geolocation API를 지원하지 않을 경우
+                statusDiv.innerText = "이 브라우저는 위치 서비스를 지원하지 않습니다.";
+            }
+        });
+    </script>
+</body>
+</html>
